@@ -1,0 +1,22 @@
+services:
+  dev:
+    restart: unless-stopped
+    image: docker.robotsix.net/dev-docker:latest
+    container_name: robotsix-dev
+    tty: true
+    stdin_open: true
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TERM=xterm-256color
+      - TZ=Europe/Paris
+    network_mode: host
+    volumes:
+      # Saves copilot configuration
+      - copilot-config:/home/robotsix-docker/.config/github-copilot
+      # Change this to mount your project directory
+      - .:/home/robotsix-docker/docker-dev
+    entrypoint: ["/bin/zsh", "-c", "tmux -u"]
+
+volumes:
+  copilot-config:
+    external: false
