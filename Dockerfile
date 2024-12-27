@@ -1,9 +1,10 @@
+# Use the latest version of Alpine Linux as the base image
 FROM alpine:latest
 
 # Install required packages
 RUN apk add --no-cache --update\
-	curl \
-	git \
+	curl \ 
+	git \ 
 	tar \
 	unzip \
 	zsh \
@@ -51,37 +52,43 @@ RUN ARCH=$(uname -m) && \
 # Add Hack Nerd Font
 RUN mkdir -p /usr/share/fonts \
 	COPY fonts/Hack /usr/share/fonts/Hack
-RUN fc-cache -f -v
+RUN fc-cache -f -v  # Rebuild font cache
 
+# Add a new user 'robotsix-docker'
 RUN adduser -D -u 1000 robotsix-docker
 
-# Install Nix
+# Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
 
+# Switch to 'robotsix-docker' user
 USER robotsix-docker
 
+# Install Nix package manager
 RUN sh <(curl -L https://nixos.org/nix/install) --no-daemon
 
-# Make zsh the default shell
+# Make zsh the default shell for 'robotsix-docker'
 RUN chsh -s /bin/zsh robotsix-docker
-# Install oh-my-zsh for robotsix-docker
+
+# Install oh-my-zsh for 'robotsix-docker'
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
 	&& chown -R robotsix-docker:robotsix-docker /home/robotsix-docker/.oh-my-zsh
 
 # Install autosuggestions for zsh
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/robotsix-docker/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
 # Install syntax highlighting for zsh
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/robotsix-docker/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-# Custom agnoster theme
+
+# Copy custom agnoster theme
 COPY conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
 
-# Copy zsh configuration for robotsix-docker
+# Copy zsh configuration for 'robotsix-docker'
 COPY conf/.zshrc /home/robotsix-docker/.zshrc
 
-# Copy tmux configuration for robotsix-docker
+# Copy tmux configuration for 'robotsix-docker'
 COPY conf/.tmux.conf /home/robotsix-docker/.tmux.conf
 
-# Copy neovim configuration for robotsix-docker
+# Copy neovim configuration for 'robotsix-docker'
 COPY conf/nvim /home/robotsix-docker/.config/nvim
 
 # Install aider-chat in a virtual environment
@@ -91,14 +98,19 @@ RUN python3 -m venv /home/robotsix-docker/.aider && \
 	python -m pip cache purge && \
 	deactivate
 
+# Switch back to root user
 USER root
 
-# Create the github-copilot configuration directory
+# Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
-# Ensure everything is owned by robotsix-docker
+# Ensure everything is owned by 'robotsix-docker'
 RUN chown -R robotsix-docker:robotsix-docker /home/robotsix-docker
 
-# Switch to robotsix-docker user
+# Configure git email and name
+RUN git config --global user.email "damien@robotsix.net" && \
+	git config --global user.name "Damien SIX"
+
+# Switch to 'robotsix-docker' user and set the working directory
 USER robotsix-docker
 WORKDIR /home/robotsix-docker
