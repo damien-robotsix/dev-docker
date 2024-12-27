@@ -15,6 +15,7 @@ services:
       - copilot-config:/home/robotsix-docker/.config/github-copilot
       # Change this to mount your project directory
       - .:/home/robotsix-docker/docker-dev
+      - ~/.gitconfig:/home/robotsix-docker/.gitconfig:ro
     entrypoint: ["/bin/zsh", "-c", "tmux -u"]
 
 volumes:

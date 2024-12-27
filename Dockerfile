@@ -107,10 +107,6 @@ RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 # Ensure everything is owned by 'robotsix-docker'
 RUN chown -R robotsix-docker:robotsix-docker /home/robotsix-docker
 
-# Configure git email and name
-RUN git config --global user.email "damien@robotsix.net" && \
-	git config --global user.name "Damien SIX"
-
 # Switch to 'robotsix-docker' user and set the working directory
 USER robotsix-docker
 WORKDIR /home/robotsix-docker
