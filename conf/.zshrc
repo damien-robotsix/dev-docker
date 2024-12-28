@@ -11,4 +11,4 @@ source $ZSH/oh-my-zsh.sh
 
 PATH=$PATH:/home/robotsix-docker/.nix-profile/bin
 
-source $HOME/.aider/bin/activate
+source $HOME/.robotsix-env/bin/activate

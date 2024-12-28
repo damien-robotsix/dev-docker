@@ -23,7 +23,11 @@ RUN apk add --no-cache --update\
 	py3-pip \
 	py3-virtualenv \
 	python3-dev \
+	portaudio \
+	libsndfile \
 	linux-headers \
+	alsa-lib \
+	alsa-utils \
 	xz && \
 	echo hosts: files dns > /etc/nsswitch.conf
 
@@ -91,15 +95,19 @@ COPY conf/.tmux.conf /home/robotsix-docker/.tmux.conf
 # Copy neovim configuration for 'robotsix-docker'
 COPY conf/nvim /home/robotsix-docker/.config/nvim
 
-# Install aider-chat in a virtual environment
-RUN python3 -m venv /home/robotsix-docker/.aider && \
-	. /home/robotsix-docker/.aider/bin/activate && \
-	python -m pip install -U --upgrade-strategy only-if-needed aider-chat && \
+# Install python packages in a virtual environment
+RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
+	. /home/robotsix-docker/.robotsix-env/bin/activate && \
+	python -m pip install -U --upgrade-strategy only-if-needed aider-chat sounddevice soundfile && \
 	python -m pip cache purge && \
 	deactivate
 
 # Switch back to root user
 USER root
+
+# Add robotsix-docker and root to the audio group
+RUN addgroup robotsix-docker audio && \
+	addgroup root audio
 
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
