@@ -29,10 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
-# Get latest Neovim
-COPY --from=docker.robotsix.net/alpine-neovim:latest /usr/local/bin/nvim /usr/local/bin/nvim
-COPY --from=docker.robotsix.net/alpine-neovim:latest /usr/local/share/nvim /usr/local/share/nvim
-COPY --from=docker.robotsix.net/alpine-neovim:latest /usr/local/lib/nvim /usr/local/lib/nvim
+# Download and extract the latest Neovim nightly build
+RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz && \
+    tar xzvf nvim-linux64.tar.gz -C /usr/local/bin --strip-components=1 && \
+    rm nvim-linux64.tar.gz
 
 # Install language servers with npm
 RUN npm install -g \
