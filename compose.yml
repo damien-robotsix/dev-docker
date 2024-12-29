@@ -17,7 +17,8 @@ services:
       - .:/home/robotsix-docker/docker-dev
       # Git configuration
       - ~/.gitconfig:/home/robotsix-docker/.gitconfig:ro
-      # Sound devices
+      # SSH keys
+      - ~/.ssh:/home/robotsix-docker/.ssh:ro
       - /dev/snd:/dev/snd
     entrypoint: ["/bin/zsh", "-c", "tmux -u"]
     devices:

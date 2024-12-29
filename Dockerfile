@@ -141,9 +141,4 @@ COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
-# Copy host SSH public keys
-COPY --chown=robotsix-docker ~/.ssh/id_rsa.pub /home/robotsix-docker/.ssh/authorized_keys
-
-# Set permissions for SSH keys
-RUN chmod 600 /home/robotsix-docker/.ssh/authorized_keys
 WORKDIR /home/robotsix-docker
