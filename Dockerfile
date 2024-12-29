@@ -70,7 +70,7 @@ RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
 USER robotsix-docker
 
 # Install Nix package manager
-RUN sh <(curl -L https://nixos.org/nix/install) --no-daemon
+RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
 
 # Install oh-my-zsh for 'robotsix-docker'
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
