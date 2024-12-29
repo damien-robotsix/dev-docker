@@ -11,5 +11,11 @@ return {
 				desc = "Buffer local Keymaps with which-key"
 			}
 		},
+		{
+			"folke/tokyonight.nvim",
+			lazy = false,
+			priority = 1000,
+			opts = {},
+		}
 	}
 }

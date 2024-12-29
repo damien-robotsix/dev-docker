@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	alsa-utils \
 	language-pack-en \
 	tzdata \
+	ripgrep \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
