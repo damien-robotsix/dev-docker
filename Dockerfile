@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     clang \
     openssl \
-    awscli \
     npm \
     tzdata \
     make \
@@ -52,27 +51,26 @@ RUN ARCH=$(uname -m) && \
 	fi
 
 # Add Hack Nerd Font
-COPY fonts/Hack /usr/share/fonts/Hack
+COPY fonts /usr/share/fonts
 RUN fc-cache -f -v  # Rebuild font cache
 
 # Add a new user 'robotsix-docker'
-RUN adduser -D -u 1000 robotsix-docker
+RUN useradd -m -s /bin/zsh robotsix-docker
 
 # Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
 
 # Add robotsix-docker and root to the audio group
-RUN addgroup robotsix-docker audio && \
-	addgroup root audio
+# Add robotsix-docker to sudoers
+RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
+	usermod -a -G sudo robotsix-docker && \
+	echo "robotsix-docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
 # Install Nix package manager
 RUN sh <(curl -L https://nixos.org/nix/install) --no-daemon
-
-# Make zsh the default shell for 'robotsix-docker'
-RUN chsh -s /bin/zsh robotsix-docker
 
 # Install oh-my-zsh for 'robotsix-docker'
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
