@@ -106,7 +106,8 @@ COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	. /home/robotsix-docker/.robotsix-env/bin/activate && \
 	python -m pip install -U pip && \
-	python -m pip -v install aider-chat sounddevice soundfile && \
+	python -m pip -v install aider-chat sounddevice soundfile playwright && \
+	python -m playwright install chromium && \
 	python -m pip cache purge && \
 	deactivate
 
