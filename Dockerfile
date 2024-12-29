@@ -1,35 +1,33 @@
-# Use the latest version of Alpine Linux as the base image
-FROM alpine:latest
+# Use the latest version of Ubuntu as the base image
+FROM ubuntu:latest
 
 # Install required packages
-RUN apk add --no-cache --update\
-	curl \ 
-	git \ 
-	tar \
-	unzip \
-	zsh \
-	shadow \
-	fontconfig \
-	tmux \
-	g++ \
-	clang \
-	openssl \
-	aws-cli \
-	npm \
-	zsh-vcs \
-	tzdata \
-	make \
-	tar \
-	py3-pip \
-	py3-virtualenv \
-	python3-dev \
-	portaudio \
-	libsndfile \
-	linux-headers \
-	alsa-lib \
-	alsa-utils \
-	xz && \
-	echo hosts: files dns > /etc/nsswitch.conf
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    git \
+    tar \
+    unzip \
+    zsh \
+    passwd \
+    fontconfig \
+    tmux \
+    g++ \
+    clang \
+    openssl \
+    awscli \
+    npm \
+    tzdata \
+    make \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    portaudio19-dev \
+    libsndfile1 \
+    linux-headers-generic \
+    alsa-base \
+    alsa-utils \
+    xz-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 # Get latest Neovim
 COPY --from=docker.robotsix.net/alpine-neovim:latest /usr/local/bin/nvim /usr/local/bin/nvim
@@ -54,8 +52,7 @@ RUN ARCH=$(uname -m) && \
 	fi
 
 # Add Hack Nerd Font
-RUN mkdir -p /usr/share/fonts \
-	COPY fonts/Hack /usr/share/fonts/Hack
+COPY fonts/Hack /usr/share/fonts/Hack
 RUN fc-cache -f -v  # Rebuild font cache
 
 # Add a new user 'robotsix-docker'
