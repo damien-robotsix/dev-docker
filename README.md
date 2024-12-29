@@ -29,10 +29,18 @@ Dev-Docker is a Docker-based development environment tailored for terminal-based
    docker build -t dev-docker .
    ```
 
-3. Run the Docker container:
+3. Run the Docker container using Docker Compose:
    ```bash
-   docker run -it dev-docker
+   docker-compose up -d
    ```
+
+### Customization
+
+- **Volumes**: Customize the `compose.yml` file to mount your project directory or other necessary volumes. For example, change the line:
+  ```yaml
+  - .:/home/robotsix-docker/docker-dev
+  ```
+  to point to your specific project directory.
 
 ## Usage
 
@@ -44,7 +52,7 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
 
