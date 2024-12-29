@@ -64,6 +64,10 @@ RUN adduser -D -u 1000 robotsix-docker
 # Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
 
+# Add robotsix-docker and root to the audio group
+RUN addgroup robotsix-docker audio && \
+	addgroup root audio
+
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
@@ -84,37 +88,27 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/robotsix-do
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/robotsix-docker/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 # Copy custom agnoster theme
-COPY conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
+COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
 
 # Copy zsh configuration for 'robotsix-docker'
-COPY conf/.zshrc /home/robotsix-docker/.zshrc
+COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
 # Copy tmux configuration for 'robotsix-docker'
-COPY conf/.tmux.conf /home/robotsix-docker/.tmux.conf
+COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
 
 # Copy neovim configuration for 'robotsix-docker'
-COPY conf/nvim /home/robotsix-docker/.config/nvim
+COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 
 # Install python packages in a virtual environment
 RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	. /home/robotsix-docker/.robotsix-env/bin/activate && \
-	python -m pip install -U --upgrade-strategy only-if-needed aider-chat sounddevice soundfile && \
+	python -m pip install -U pip && \
+	python -m pip -v install aider-chat sounddevice soundfile && \
 	python -m pip cache purge && \
 	deactivate
-
-# Switch back to root user
-USER root
-
-# Add robotsix-docker and root to the audio group
-RUN addgroup robotsix-docker audio && \
-	addgroup root audio
 
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
-# Ensure everything is owned by 'robotsix-docker'
-RUN chown -R robotsix-docker:robotsix-docker /home/robotsix-docker
-
-# Switch to 'robotsix-docker' user and set the working directory
-USER robotsix-docker
+# Set the working directory
 WORKDIR /home/robotsix-docker
