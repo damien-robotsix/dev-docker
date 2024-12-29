@@ -25,12 +25,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     linux-headers-generic \
     alsa-base \
     alsa-utils \
+    language-pack-en \
+    tzdata \
     xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
+RUN update-locale LANG=en_US.UTF-8
+
 # Download and extract the latest Neovim nightly build
 RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz && \
-    tar xzvf nvim-linux64.tar.gz -C /usr/local/bin --strip-components=1 && \
+    tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
     rm nvim-linux64.tar.gz
 
 # Install language servers with npm
@@ -43,19 +47,23 @@ RUN npm install -g \
 # Install lua-language-server based on architecture
 RUN ARCH=$(uname -m) && \
 	if [ "$ARCH" = "x86_64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-x64.tar.gz | tar -xz -C /usr/local/bin; \
+	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-x64.tar.gz | tar -xz -C /usr/local; \
 	elif [ "$ARCH" = "aarch64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-arm64.tar.gz | tar -xz -C /usr/local/bin; \
+	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-arm64.tar.gz | tar -xz -C /usr/local; \
 	else \
 	echo "Unsupported architecture: $ARCH"; exit 1; \
 	fi
 
 # Add Hack Nerd Font
-COPY fonts /usr/share/fonts
+COPY fonts/Hack /usr/share/fonts/Hack
 RUN fc-cache -f -v  # Rebuild font cache
 
-# Add a new user 'robotsix-docker'
-RUN useradd -m -s /bin/zsh robotsix-docker
+# Rename ubuntu user to robotsix-docker
+# Set zsh as the default shell for robotsix-docker
+RUN usermod -l robotsix-docker ubuntu && \
+	usermod -d /home/robotsix-docker -m robotsix-docker && \
+	groupmod -n robotsix-docker ubuntu && \
+	chsh -s /bin/zsh robotsix-docker
 
 # Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
