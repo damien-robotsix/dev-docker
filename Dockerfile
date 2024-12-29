@@ -3,39 +3,62 @@ FROM ubuntu:latest
 
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    git \
-    tar \
-    unzip \
-    zsh \
-    passwd \
-    fontconfig \
-    tmux \
-    g++ \
-    clang \
-    openssl \
-    npm \
-    tzdata \
-    make \
-    python3-pip \
-    python3-venv \
-    python3-dev \
-    portaudio19-dev \
-    libsndfile1 \
-    linux-headers-generic \
-    alsa-base \
-    alsa-utils \
-    language-pack-en \
-    tzdata \
-    xz-utils && \
-    rm -rf /var/lib/apt/lists/*
+	curl \
+	git \
+	tar \
+	unzip \
+	zsh \
+	passwd \
+	fontconfig \
+	tmux \
+	g++ \
+	clang \
+	openssl \
+	npm \
+	tzdata \
+	make \
+	python3-pip \
+	python3-venv \
+	python3-dev \
+	portaudio19-dev \
+	libsndfile1 \
+	linux-headers-generic \
+	alsa-base \
+	alsa-utils \
+	language-pack-en \
+	tzdata \
+	xz-utils && \
+	rm -rf /var/lib/apt/lists/*
 
 RUN update-locale LANG=en_US.UTF-8
 
 # Download and extract the latest Neovim nightly build
 RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz && \
-    tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
-    rm nvim-linux64.tar.gz
+	tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
+	rm nvim-linux64.tar.gz
+
+# Install deps for playwright
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	libglib2.0-0t64 \           
+	libnss3 \                                    
+	libnspr4 \                                   
+	libatk1.0-0t64 \                             
+	libatk-bridge2.0-0t64 \                      
+	libcups2t64 \                                
+	libdrm2 \                                    
+	libx11-6 \                                   
+	libxcomposite1 \                             
+	libxdamage1 \                                
+	libxext6 \                                   
+	libxfixes3 \                                 
+	libxrandr2 \                                 
+	libgbm1 \                                    
+	libxcb1 \                                    
+	libxkbcommon0 \                              
+	libpango-1.0-0 \                             
+	libcairo2 \                                  
+	libatspi2.0-0t64 && \
+	rm -rf /var/lib/apt/lists/*
 
 # Install language servers with npm
 RUN npm install -g \
