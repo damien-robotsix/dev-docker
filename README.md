@@ -24,12 +24,7 @@ Dev-Docker is a Docker-based development environment tailored for terminal-based
    cd dev-docker
    ```
 
-2. Build the Docker image:
-   ```bash
-   docker build -t dev-docker .
-   ```
-
-3. Run the Docker container using Docker Compose:
+2. Run the Docker container using Docker Compose:
    ```bash
    docker-compose up -d
    ```
