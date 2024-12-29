@@ -18,11 +18,7 @@ Dev-Docker is a Docker-based development environment tailored for terminal-based
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/dev-docker.git
-   cd dev-docker
-   ```
+1. Obtain the `compose.yml` file and place it in your desired directory.
 
 2. Run the Docker container using Docker Compose:
    ```bash
