@@ -76,6 +76,8 @@ RUN ARCH=$(uname -m) && \
 	else \
 	echo "Unsupported architecture: $ARCH"; exit 1; \
 	fi
+# Allow /usr/local/log to be written to by all users
+RUN mkdir /usr/local/log && chmod 777 /usr/local/log
 
 # Add Hack Nerd Font
 COPY fonts/Hack /usr/share/fonts/Hack
@@ -113,6 +115,15 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/robotsix-do
 # Install syntax highlighting for zsh
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/robotsix-docker/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
+# Install python packages in a virtual environment
+RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
+	. /home/robotsix-docker/.robotsix-env/bin/activate && \
+	python -m pip install -U pip && \
+	python -m pip -v install aider-chat sounddevice soundfile playwright && \
+	python -m playwright install chromium && \
+	python -m pip cache purge && \
+	deactivate
+
 # Copy custom agnoster theme
 COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
 
@@ -124,15 +135,6 @@ COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
 
 # Copy neovim configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
-
-# Install python packages in a virtual environment
-RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
-	. /home/robotsix-docker/.robotsix-env/bin/activate && \
-	python -m pip install -U pip && \
-	python -m pip -v install aider-chat sounddevice soundfile playwright && \
-	python -m playwright install chromium && \
-	python -m pip cache purge && \
-	deactivate
 
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
