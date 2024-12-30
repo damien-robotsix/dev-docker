@@ -9,10 +9,12 @@ class Function(OpenAISchema):
     Executes a shell command and returns the output (result).
     """
 
+    failed_commands = []
+
     shell_command: str = Field(
         ...,
         example="ls -la",
-        descriptions="Shell command to execute in a tmux environment.",
+        descriptions="Shell command to execute in a tmux environment. Avoid using: " + ", ".join(failed_commands),
     )
 
     class Config:
@@ -25,4 +27,6 @@ class Function(OpenAISchema):
         )
         output, _ = process.communicate()
         exit_code = process.returncode
+        if exit_code != 0:
+            cls.failed_commands.append(shell_command)
         return f"Exit code: {exit_code}, Output:\n{output.decode()}"
