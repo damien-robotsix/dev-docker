@@ -12,3 +12,12 @@ source $ZSH/oh-my-zsh.sh
 PATH=$PATH:/home/robotsix-docker/.nix-profile/bin
 
 source $HOME/.robotsix-env/bin/activate
+
+# Shell-GPT integration ZSH
+_sgpt_zsh() {
+if [[ -n "$BUFFER" ]]; then
+    _sgpt_cmd=$BUFFER
+    sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions 
+fi
+}
+bindkey ^l _sgpt_zsh
