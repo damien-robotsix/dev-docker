@@ -121,7 +121,7 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/rob
 RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	. /home/robotsix-docker/.robotsix-env/bin/activate && \
 	python -m pip install -U pip && \
-	python -m pip -v install aider-chat sounddevice soundfile playwright && \
+	python -m pip -v install aider-chat sounddevice soundfile playwright shell-gpt && \
 	python -m playwright install chromium && \
 	python -m pip cache purge && \
 	deactivate
