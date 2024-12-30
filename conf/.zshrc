@@ -27,10 +27,9 @@ fi
 zle -N _sgpt_zsh
 bindkey '\el' _sgpt_zsh
 _record_and_use_sgpt() {
-    local _voice_output
-    _voice_output=$(python3 -m aider.voice < /dev/tty)
-    if [[ -n "$_voice_output" ]]; then
-        sgpt <<< "$_voice_output" --no-interaction --role ShellGPTActions
+    script -c "python3 -m aider.voice" /tmp/sgpt_voice_input
+    if [[ -s /tmp/sgpt_voice_input ]]; then
+        sgpt <<< "$(cat /tmp/sgpt_voice_input)" --no-interaction --role ShellGPTActions
     fi
 }
 
