@@ -26,12 +26,5 @@ fi
 }
 zle -N _sgpt_zsh
 bindkey '\el' _sgpt_zsh
-_record_and_use_sgpt() {
-    script -c "python3 -m aider.voice" /tmp/sgpt_voice_input
-    if [[ -s /tmp/sgpt_voice_input ]]; then
-        sgpt <<< "$(cat /tmp/sgpt_voice_input)" --no-interaction --role ShellGPTActions
-    fi
-}
+alias gv='script -c "python3 -m aider.voice" /tmp/test && sgpt <<< $(tail -n 3 /tmp/test | head -n 1) --no-interaction --role ShellGPTActions'
 
-zle -N _record_and_use_sgpt
-bindkey '\er' _record_and_use_sgpt
