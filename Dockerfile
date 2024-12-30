@@ -120,9 +120,6 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/rob
 # Copy custom agnoster theme
 COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
 
-# Copy zsh configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
-
 # Install python packages in a virtual environment
 RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	. /home/robotsix-docker/.robotsix-env/bin/activate && \
@@ -131,6 +128,9 @@ RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	python -m playwright install chromium && \
 	python -m pip cache purge && \
 	deactivate
+
+# Copy zsh configuration for 'robotsix-docker'
+COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
 # Copy tmux configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
@@ -141,8 +141,8 @@ COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Copy shell_gpt configuration for 'robotsix-docker'
+COPY --chown=robotsix-docker conf/shell_gpt /home/robotsix-docker/.config/shell_gpt
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 WORKDIR /home/robotsix-docker
+
