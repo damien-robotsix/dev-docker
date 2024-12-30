@@ -15,7 +15,6 @@ class Function(OpenAISchema):
     failed_commands_file: ClassVar[str] = os.path.join(
         os.path.expanduser("~"), ".config", "shell_gpt", "failed_commands.json"
     )
-    failed_commands: ClassVar[list] = []
 
     @classmethod
     def load_failed_commands(cls):
@@ -28,6 +27,8 @@ class Function(OpenAISchema):
         with open(cls.failed_commands_file, "w") as file:
             json.dump(cls.failed_commands, file)
 
+    failed_commands: ClassVar[list] = cls.load_failed_commands()
+    
     shell_command: str = Field(
         ...,
         example="ls -la",
