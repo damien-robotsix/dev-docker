@@ -17,7 +17,8 @@ source $HOME/.robotsix-env/bin/activate
 _sgpt_zsh() {
 if [[ -n "$BUFFER" ]]; then
     _sgpt_cmd=$BUFFER
-    sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions 
+    sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions
+    echo
 fi
 }
 zle -N _sgpt_zsh
