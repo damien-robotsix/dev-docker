@@ -117,6 +117,12 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/robotsix-do
 # Install syntax highlighting for zsh
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/robotsix-docker/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
+# Copy custom agnoster theme
+COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
+
+# Copy zsh configuration for 'robotsix-docker'
+COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
+
 # Install python packages in a virtual environment
 RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	. /home/robotsix-docker/.robotsix-env/bin/activate && \
@@ -125,12 +131,6 @@ RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
 	python -m playwright install chromium && \
 	python -m pip cache purge && \
 	deactivate
-
-# Copy custom agnoster theme
-COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
-
-# Copy zsh configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
 # Copy tmux configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
