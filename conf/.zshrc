@@ -20,4 +20,5 @@ if [[ -n "$BUFFER" ]]; then
     sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions 
 fi
 }
+zle -N _sgpt_zsh
 bindkey ^l _sgpt_zsh
