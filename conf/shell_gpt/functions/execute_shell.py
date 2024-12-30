@@ -27,12 +27,19 @@ class Function(OpenAISchema):
         with open(cls.failed_commands_file, "w") as file:
             json.dump(cls.failed_commands, file)
 
-    failed_commands: ClassVar[list] = cls.load_failed_commands()
-    
+    failed_commands: ClassVar[list] = []
+
+    @classmethod
+    def initialize_failed_commands(cls):
+        cls.load_failed_commands()
+        cls.failed_commands = cls.failed_commands or []
+
+    initialize_failed_commands()
+
     shell_command: str = Field(
         ...,
         example="ls -la",
-        descriptions="Shell command to execute in a tmux environment. Known failing: "
+        description="Shell command to execute in a tmux environment. Known failing: "
         + ", ".join([f"{cmd} (Error: {err})" for cmd, err in failed_commands]),
     )
 
