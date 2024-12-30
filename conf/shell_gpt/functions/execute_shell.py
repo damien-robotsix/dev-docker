@@ -22,7 +22,8 @@ def save_failed_commands(failed_commands):
 
 class Function(OpenAISchema):
     """
-    Executes a shell command and returns the output (result).
+    Executes a shell command and returns its output along with the exit code.
+    If the command fails, it logs the command and error message for future reference.
     """
     shell_command: str = Field(
         ...,
