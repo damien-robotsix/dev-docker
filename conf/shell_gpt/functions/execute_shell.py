@@ -6,8 +6,9 @@ from instructor import OpenAISchema
 from pydantic import Field
 
 failed_commands_file = os.path.join(
-        os.path.expanduser("~"), ".config", "shell_gpt", "failed_commands.json"
-        )
+    os.path.expanduser("~"), ".config", "shell_gpt", "failed_commands.json"
+)
+
 
 def load_failed_commands():
     failed_commands = []
@@ -16,15 +17,17 @@ def load_failed_commands():
             failed_commands = json.load(file)
     return failed_commands
 
+
 def save_failed_commands(failed_commands):
     with open(failed_commands_file, "w") as file:
         json.dump(failed_commands, file)
 
+
 class Function(OpenAISchema):
     """
-    Executes a shell command and returns its output along with the exit code.
-    If the command fails, it logs the command and error message for future reference.
+    Executes a shell command and returns the output (result). You MUST analyze the failling commands to avoid reproducing the issue.
     """
+
     shell_command: str = Field(
         ...,
         example="ls -la",
