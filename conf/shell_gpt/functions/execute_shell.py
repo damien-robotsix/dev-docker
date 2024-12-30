@@ -12,7 +12,9 @@ class Function(OpenAISchema):
     Executes a shell command and returns the output (result).
     """
 
-    failed_commands_file: ClassVar[str] = "failed_commands.json"
+    failed_commands_file: ClassVar[str] = os.path.join(
+        os.path.expanduser("~"), ".config", "shell_gpt", "failed_commands.json"
+    )
     failed_commands: ClassVar[list] = []
 
     @classmethod
