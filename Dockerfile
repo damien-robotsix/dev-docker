@@ -141,4 +141,8 @@ COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 # Create the GitHub Copilot configuration directory
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 WORKDIR /home/robotsix-docker
