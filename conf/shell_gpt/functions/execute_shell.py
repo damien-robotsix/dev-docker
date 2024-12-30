@@ -3,6 +3,7 @@ import subprocess
 import json
 import os
 from instructor import OpenAISchema
+from typing import ClassVar
 from pydantic import Field
 
 
@@ -11,8 +12,8 @@ class Function(OpenAISchema):
     Executes a shell command and returns the output (result).
     """
 
-    failed_commands_file = "failed_commands.json"
-    failed_commands = []
+    failed_commands_file: ClassVar[str] = "failed_commands.json"
+    failed_commands: ClassVar[list] = []
 
     @classmethod
     def load_failed_commands(cls):
