@@ -26,5 +26,5 @@ fi
 }
 zle -N _sgpt_zsh
 bindkey '\el' _sgpt_zsh
-alias gv='script -c "python3 -m aider.voice" /tmp/test && sgpt <<< $(tail -n 3 /tmp/test | head -n 1) --no-interaction --role ShellGPTActions'
+alias gv='script -c "python3 -m aider.voice" /tmp/voice_gpt && sgpt <<< $(tail -n 3 /tmp/voice_gpt | head -n 1) --no-interaction --role ShellGPTActions'
 
