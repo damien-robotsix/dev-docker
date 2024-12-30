@@ -25,6 +25,7 @@ if [[ -n "$BUFFER" ]]; then
 fi
 }
 zle -N _sgpt_zsh
+bindkey '\el' _sgpt_zsh
 _record_and_use_sgpt() {
     local _voice_output
     _voice_output=$(python3 -m aider.voice)
