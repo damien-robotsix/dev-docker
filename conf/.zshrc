@@ -13,6 +13,9 @@ PATH=$PATH:/home/robotsix-docker/.nix-profile/bin
 
 source $HOME/.robotsix-env/bin/activate
 
+# Alias for whisper_mic
+alias whisper_mic_start="whisper_mic --loop --dictate"
+
 # Shell-GPT integration ZSH
 _sgpt_zsh() {
 if [[ -n "$BUFFER" ]]; then
