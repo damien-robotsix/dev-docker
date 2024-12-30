@@ -14,7 +14,7 @@ class Function(OpenAISchema):
     shell_command: str = Field(
         ...,
         example="ls -la",
-        descriptions="Shell command to execute in a tmux environment. Avoid using: " + ", ".join(
+        descriptions="Shell command to execute in a tmux environment. Known failing: " + ", ".join(
             [f"{cmd} (Error: {err})" for cmd, err in failed_commands]
         ),
     )
