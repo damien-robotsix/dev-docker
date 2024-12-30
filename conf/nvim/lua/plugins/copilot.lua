@@ -3,18 +3,24 @@ vim.g.copilot_workspace_folders = { vim.fn.getcwd() }
 
 return {
 	{
-		"github/copilot.vim",
+		"zbirenbaum/copilot.lua",
+		config = function()
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+				filetypes = {
+					["*"] = true,
+				},
+			})
+		end
 	},
 	{
-		"CopilotC-Nvim/CopilotChat.nvim",
+		"zbirenbaum/copilot-cmp",
 		dependencies = {
-			{ "github/copilot.vim" },  -- or zbirenbaum/copilot.lua
-			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+			"hrsh7th/nvim-cmp",
 		},
-		build = "make tiktoken",           -- Only on MacOS or Linux
-		opts = {
-			-- See Configuration section for options
-		},
-		--         -- See Commands section for default commands if you want to lazy load on them
-	},
+		config = function()
+			require("copilot_cmp").setup()
+		end
+	}
 }

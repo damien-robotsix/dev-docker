@@ -7,6 +7,25 @@ vim.opt.signcolumn = "yes"
 vim.opt.number = true
 
 require("config.lazy")
-require("config.keymap")
 
 vim.cmd("colorscheme tokyonight-moon")
+
+require("config.keymap")
+
+local cmp = require('cmp')
+
+cmp.setup({
+	sources = {
+		{ name = "copilot",  group_index = 2 },
+		{ name = 'nvim_lsp', group_index = 2 },
+	},
+	snippet = {
+		expand = function(args)
+			-- You need Neovim v0.10 to use vim.snippet
+			vim.snippet.expand(args.body)
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<CR>'] = cmp.mapping.confirm({ select = true }),
+	}),
+})
