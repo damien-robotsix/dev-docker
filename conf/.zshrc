@@ -28,7 +28,7 @@ zle -N _sgpt_zsh
 bindkey '\el' _sgpt_zsh
 _record_and_use_sgpt() {
     local _voice_output
-    _voice_output=$(xterm -e python3 -m aider.voice)
+    _voice_output=$(screen -dmS aider_voice_session python3 -m aider.voice && screen -S aider_voice_session -X hardcopy .aider_voice_output && cat .aider_voice_output)
     if [[ -n "$_voice_output" ]]; then
         sgpt <<< "$_voice_output" --no-interaction --role ShellGPTActions
     fi
