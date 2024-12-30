@@ -21,6 +21,7 @@ services:
       - ~/.ssh:/home/robotsix-docker/.ssh:ro
       - /dev/snd:/dev/snd
     entrypoint: ["/bin/zsh", "-c", "tmux -u"]
+    command: ["whisper_mic", "--loop", "--dictate"]
     devices:
       # Sound devices
       - /dev/snd
