@@ -12,7 +12,7 @@ class Function(OpenAISchema):
     shell_command: str = Field(
         ...,
         example="ls -la",
-        descriptions="Shell command to execute.",
+        descriptions="Shell command to execute in a tmux environment.",
     )
 
     class Config:
