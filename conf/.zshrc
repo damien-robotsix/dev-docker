@@ -17,8 +17,11 @@ source $HOME/.robotsix-env/bin/activate
 _sgpt_zsh() {
 if [[ -n "$BUFFER" ]]; then
     _sgpt_cmd=$BUFFER
-    sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions
     echo
+    sgpt <<< "$_sgpt_cmd" --no-interaction --role ShellGPTActions
+    # clear the buffer
+    BUFFER=""
+    zle redisplay
 fi
 }
 zle -N _sgpt_zsh
