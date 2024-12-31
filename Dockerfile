@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	tzdata \
 	ripgrep \
 	tmuxinator \
+	clangd \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
