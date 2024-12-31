@@ -1,9 +1,0 @@
-name: project
-root: ~/project
-
-windows:
-  - editor:
-      layout: main-vertical
-      panes:
-        - cd /path/to/terminal/folder
-        - nvim /path/to/nvim/folder
