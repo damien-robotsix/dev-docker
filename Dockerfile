@@ -143,7 +143,7 @@ COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
 # Copy aider configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.config/aider_config.yml
+COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.aider.conf.yml
 
 # Copy shell_gpt configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/shell_gpt /home/robotsix-docker/.config/shell_gpt
