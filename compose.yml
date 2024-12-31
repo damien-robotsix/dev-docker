@@ -17,6 +17,8 @@ services:
       - .:/home/robotsix-docker/docker-dev
       # Git configuration
       - ~/.gitconfig:/home/robotsix-docker/.gitconfig:ro
+      # Tmux configuration
+      - ~/.tmux.conf:/home/robotsix-docker/.tmux.conf:ro
       # SSH keys
       - ~/.ssh:/home/robotsix-docker/.ssh:ro
       - /dev/snd:/dev/snd
