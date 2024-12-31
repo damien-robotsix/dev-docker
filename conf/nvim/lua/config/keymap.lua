@@ -9,7 +9,7 @@ end
 
 vim.keymap.set({ "n" }, "--", "<cmd>split<cr>", keymapOptions("Horizontal split"))
 vim.keymap.set({ "n" }, "||", "<cmd>vsplit<cr>", keymapOptions("Vertical split"))
-vim.keymap.set({ "n" }, "??", "<cmd>lua require('which-key').show({ global = true })<cr>",
+vim.keymap.set({ "n" }, "??", require('which-key').show({ global = true }),
 	keymapOptions("Buffer local Keymaps with which-key"))
 vim.keymap.set({ "n", "i" }, "<C-d>", function()
 	local current_win = vim.api.nvim_get_current_win()
@@ -31,11 +31,12 @@ vim.keymap.set({ "n", "i" }, "<C-d>", function()
 	end
 end, keymapOptions("Close Popup or Quit"))
 vim.keymap.set({ "n" }, "fs", "<cmd>lua vim.lsp.buf.format()<cr><cmd>w<cr>", keymapOptions("Format"))
-vim.keymap.set({ "n" }, "<c-Left>", "<cmd>TmuxNavigateLeft<cr>", keymapOptions("Navigate Left"))
-vim.keymap.set({ "n" }, "<c-Down>", "<cmd>TmuxNavigateDown<cr>", keymapOptions("Navigate Down"))
-vim.keymap.set({ "n" }, "<c-Up>", "<cmd>TmuxNavigateUp<cr>", keymapOptions("Navigate Up"))
-vim.keymap.set({ "n" }, "<c-Right>", "<cmd>TmuxNavigateRight<cr>", keymapOptions("Navigate Right"))
-vim.keymap.set({ "n" }, "<c-S-Left>", "<cmd>vertical resize -5<cr>", keymapOptions("Resize Left"))
-vim.keymap.set({ "n" }, "<c-S-Right>", "<cmd>vertical resize +5<cr>", keymapOptions("Resize Right"))
-vim.keymap.set({ "n" }, "<c-S-Up>", "<cmd>resize -5<cr>", keymapOptions("Resize Up"))
-vim.keymap.set({ "n" }, "<c-S-Down>", "<cmd>resize +5<cr>", keymapOptions("Resize Down"))
+vim.keymap.set({ "n" }, "<c-Left>", require('smart-splits').move_cursor_left, keymapOptions("Navigate Left"))
+vim.keymap.set({ "n" }, "<c-Right>", require('smart-splits').move_cursor_right, keymapOptions("Navigate Right"))
+vim.keymap.set({ "n" }, "<c-Up>", require('smart-splits').move_cursor_up, keymapOptions("Navigate Up"))
+vim.keymap.set({ "n" }, "<c-Down>", require('smart-splits').move_cursor_down, keymapOptions("Navigate Down"))
+vim.keymap.set({ "n" }, "<c-S-Left>", require('smart-splits').resize_left, keymapOptions("Resize Left"))
+vim.keymap.set({ "n" }, "<c-S-Right>", require('smart-splits').resize_right, keymapOptions("Resize Right"))
+vim.keymap.set({ "n" }, "<c-S-Up>", require('smart-splits').resize_up, keymapOptions("Resize Up"))
+vim.keymap.set({ "n" }, "<c-S-Down>", require('smart-splits').resize_down, keymapOptions("Resize Down"))
+
