@@ -22,7 +22,7 @@ services:
       # SSH keys
       - ~/.ssh:/home/robotsix-docker/.ssh:ro
       - /dev/snd:/dev/snd
-    entrypoint: ["/bin/zsh", "-c", "tmux -u"]
+    entrypoint: ["/bin/zsh", "-c", "tmuxinator start my_project"]
     devices:
       # Sound devices
       - /dev/snd
