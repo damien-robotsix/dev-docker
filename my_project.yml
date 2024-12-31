@@ -1,5 +1,5 @@
-name: my_project
-root: ~/my_project
+name: project
+root: ~/project
 
 windows:
   - editor:
