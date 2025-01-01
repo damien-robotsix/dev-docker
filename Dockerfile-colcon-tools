@@ -1,5 +1,5 @@
 # Use the image built from your current Dockerfile as the base
-FROM docker.robotsix.net/robotsix-docker:latest
+FROM docker.robotsix.net/dev-docker:latest
 
 # Install python3-colcon-common-extensions and rosdep
 # Switch to root user
