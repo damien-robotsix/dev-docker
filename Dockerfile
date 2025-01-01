@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	ripgrep \
 	tmuxinator \
 	clangd \
+	sudo \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
