@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	make \
 	python3-pip \
 	openssh-client \
+	lsb-release \
+	gnupg \
 	python3-venv \
 	python3-dev \
 	portaudio19-dev \
