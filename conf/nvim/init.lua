@@ -16,7 +16,7 @@ local cmp = require('cmp')
 
 cmp.setup({
 	sources = {
-		{ name = "copilot",  group_index = 2 },
+		{ name = "copilot",  group_index = 2, keyword_length = 0, priority = 0 },
 		{ name = 'nvim_lsp', group_index = 2 },
 	},
 	snippet = {
