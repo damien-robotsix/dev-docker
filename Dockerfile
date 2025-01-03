@@ -6,7 +6,15 @@ ENV TZ=US \
 
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	curl \
+	curl && \
+	rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x && \
+	chmod +x setup_20.x && \
+	./setup_20.x && \
+	rm setup_20.x 
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
 	git \
 	tar \
 	unzip \
