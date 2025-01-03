@@ -1,3 +1,4 @@
+ARG UBUNTU_VERSION=latest
 FROM ubuntu:${UBUNTU_VERSION}
 
 # Install required packages
