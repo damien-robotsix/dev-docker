@@ -54,6 +54,5 @@ jobs:
           context: .
           push: true
           file: ${{ steps.determine_dockerfile.outputs.dockerfile }}
-          build-args:
-            - UBUNTU_VERSION=${{ matrix.ubuntu_version }}
+          build-args: UBUNTU_VERSION=${{ matrix.ubuntu_version }}
           tags: ${{ steps.generate_tags.outputs.tags }}
