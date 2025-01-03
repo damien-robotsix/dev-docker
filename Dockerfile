@@ -1,6 +1,9 @@
 ARG UBUNTU_VERSION=latest
 FROM ubuntu:${UBUNTU_VERSION}
 
+ENV TZ=US \
+    DEBIAN_FRONTEND=noninteractive
+
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	curl \
