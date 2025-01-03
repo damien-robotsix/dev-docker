@@ -108,17 +108,7 @@ RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
 USER robotsix-docker
 
 # Create a python virtual environment and install poetry
-RUN python3 -m venv /home/robotsix-docker/.venv && \
-	/home/robotsix-docker/.venv/bin/pip install --upgrade pip && \
-	/home/robotsix-docker/.venv/bin/pip install poetry && \
-	/home/robotsix-docker/.venv/bin/pip cache purge
-
-# Install OpenHands with virtual environment activated
-WORKDIR /home/robotsix-docker/.openHands
-RUN . /home/robotsix-docker/.venv/bin/activate && \
-	git clone https://github.com/All-Hands-AI/OpenHands.git && \
-	cd OpenHands && \
-	make build
+RUN python3 -m venv /home/robotsix-docker/.venv
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
