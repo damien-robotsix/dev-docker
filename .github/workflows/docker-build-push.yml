@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ubuntu_version: [22.04, 20.04, latest]
+        ubuntu_version: [22.04, latest]
 
     steps:
       - name: Checkout code
@@ -54,7 +54,7 @@ jobs:
     needs: build_base
     strategy:
       matrix:
-        ubuntu_version: [22.04, 20.04, latest]
+        ubuntu_version: [22.04, latest]
 
     steps:
       - name: Checkout code

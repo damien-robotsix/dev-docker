@@ -2,7 +2,7 @@ ARG UBUNTU_VERSION=latest
 FROM ubuntu:${UBUNTU_VERSION}
 
 ENV TZ=US \
-    DEBIAN_FRONTEND=noninteractive
+	DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -49,7 +49,7 @@ RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-lin
 
 # Install language servers and playwright with npm
 RUN npm install -g \
-        playwright \
+	playwright \
 	bash-language-server \
 	dockerfile-language-server-nodejs \
 	yaml-language-server && \
@@ -73,13 +73,13 @@ RUN fc-cache -f -v  # Rebuild font cache
 
 # Check if 'ubuntu' user exists; if so, rename it. Otherwise, create 'robotsix-docker' user.
 RUN if id -u ubuntu >/dev/null 2>&1; then \
-      usermod -l robotsix-docker ubuntu && \
-      usermod -d /home/robotsix-docker -m robotsix-docker && \
-      groupmod -n robotsix-docker ubuntu; \
-    else \
-      useradd -m -u 1000 robotsix-docker; \
-    fi && \
-    chsh -s /bin/zsh robotsix-docker
+	usermod -l robotsix-docker ubuntu && \
+	usermod -d /home/robotsix-docker -m robotsix-docker && \
+	groupmod -n robotsix-docker ubuntu; \
+	else \
+	useradd -m -u 1000 robotsix-docker; \
+	fi && \
+	chsh -s /bin/zsh robotsix-docker
 
 # Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
