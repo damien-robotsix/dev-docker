@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	g++ \
 	clang \
 	openssl \
-	npm \
+	nodejs \
 	tzdata \
 	make \
 	python3-pip \
