@@ -71,12 +71,15 @@ RUN mkdir /usr/local/log && chmod 777 /usr/local/log
 COPY fonts/Hack /usr/share/fonts/Hack
 RUN fc-cache -f -v  # Rebuild font cache
 
-# Rename ubuntu user to robotsix-docker
-# Set zsh as the default shell for robotsix-docker
-RUN usermod -l robotsix-docker ubuntu && \
-	usermod -d /home/robotsix-docker -m robotsix-docker && \
-	groupmod -n robotsix-docker ubuntu && \
-	chsh -s /bin/zsh robotsix-docker
+# Check if 'ubuntu' user exists; if so, rename it. Otherwise, create 'robotsix-docker' user.
+RUN if id -u ubuntu >/dev/null 2>&1; then \
+      usermod -l robotsix-docker ubuntu && \
+      usermod -d /home/robotsix-docker -m robotsix-docker && \
+      groupmod -n robotsix-docker ubuntu; \
+    else \
+      useradd -m -u 1000 robotsix-docker; \
+    fi && \
+    chsh -s /bin/zsh robotsix-docker
 
 # Prepare for Nix installation
 RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
