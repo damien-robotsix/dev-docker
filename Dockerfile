@@ -1,5 +1,6 @@
-# Use the latest version of Ubuntu as the base image
-FROM ubuntu:latest
+# Use a specified version of Ubuntu as the base image
+ARG UBUNTU_VERSION=latest
+FROM ubuntu:${UBUNTU_VERSION}
 
 # Install required packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
