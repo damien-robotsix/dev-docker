@@ -15,6 +15,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x > setup.sh && \
 	./setup.sh && \
 	rm setup.sh
 
+RUN install -m 0755 -d /etc/apt/keyrings && \
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+	chmod a+r /etc/apt/keyrings/docker.asc && \
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	git \
 	tar \
@@ -46,6 +51,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	tmuxinator \
 	clangd \
 	sudo \
+	docker-ce \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -56,9 +62,8 @@ RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-lin
 	tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
 	rm nvim-linux64.tar.gz
 
-# Install language servers and playwright with npm
+# Install language servers with npm
 RUN npm install -g \
-	playwright \
 	bash-language-server \
 	dockerfile-language-server-nodejs \
 	yaml-language-server && \
@@ -102,6 +107,19 @@ RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
+# Create a python virtual environment and install poetry
+RUN python3 -m venv /home/robotsix-docker/.venv && \
+	/home/robotsix-docker/.venv/bin/pip install --upgrade pip && \
+	/home/robotsix-docker/.venv/bin/pip install poetry && \
+	/home/robotsix-docker/.venv/bin/pip cache purge
+
+# Install OpenHands with virtual environment activated
+WORKDIR /home/robotsix-docker/.openHands
+RUN . /home/robotsix-docker/.venv/bin/activate && \
+	git clone https://github.com/All-Hands-AI/OpenHands.git && \
+	cd OpenHands && \
+	make build
+
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
 
@@ -118,15 +136,6 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /home/rob
 # Copy custom agnoster theme
 COPY --chown=robotsix-docker conf/agnoster-robotsix.zsh-theme /home/robotsix-docker/.oh-my-zsh/custom/themes/agnoster-robotsix.zsh-theme
 
-# Install python packages in a virtual environment
-RUN python3 -m venv /home/robotsix-docker/.robotsix-env && \
-	. /home/robotsix-docker/.robotsix-env/bin/activate && \
-	python -m pip install -U pip && \
-	python -m pip -v install aider-chat sounddevice soundfile playwright shell-gpt && \
-	python -m playwright install chromium && \
-	python -m pip cache purge && \
-	deactivate
-
 # Copy zsh configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
@@ -141,9 +150,6 @@ RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
 # Copy aider configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.aider.conf.yml
-
-# Copy shell_gpt configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/shell_gpt /home/robotsix-docker/.config/shell_gpt
 
 WORKDIR /home/robotsix-docker
 
