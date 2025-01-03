@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ubuntu_version: [22.04, 20.04, latest]
+        include_colcon_tools: [false, true]
 
     steps:
       - name: Checkout code
@@ -26,18 +30,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push first Docker image
-        uses: docker/build-push-action@v6.10.0
-        with:
-          context: .
-          push: true
-          file: ./Dockerfile
-          tags: docker.robotsix.net/dev-docker:latest
+      - name: Determine Dockerfile
+        id: determine_dockerfile
+        run: |
+          if [ "${{ matrix.include_colcon_tools }}" = "true" ]; then
+            echo "dockerfile=Dockerfile-colcon-tools" >> $GITHUB_OUTPUT
+          else
+            echo "dockerfile=Dockerfile" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Build and push second Docker image
-        uses: docker/build-push-action@v6.10.0
+      - name: Generate Tags
+        id: generate_tags
+        run: |
+          TAG="docker.robotsix.net/dev-docker:${{ matrix.ubuntu_version }}"
+          if [ "${{ matrix.include_colcon_tools }}" = "true" ]; then
+            TAG="${TAG}-colcon-tools"
+          fi
+          echo "tags=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          file: ./Dockerfile-colcon-tools
-          tags: docker.robotsix.net/dev-docker:latest-colcon-tools
+          file: ${{ steps.determine_dockerfile.outputs.dockerfile }}
+          build-args:
+            UBUNTU_VERSION: ${{ matrix.ubuntu_version }}
+          tags: ${{ steps.generate_tags.outputs.tags }}
