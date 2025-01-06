@@ -1,0 +1,11 @@
+ARG UBUNTU_VERSION=latest
+FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-colcon-tools
+
+# Switch to root user
+USER root
+
+RUN apt-get ros-humble-dektop
+
+# Switch back to 'robotsix-docker' user
+USER robotsix-docker
+
