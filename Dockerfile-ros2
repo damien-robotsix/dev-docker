@@ -4,7 +4,12 @@ FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-colcon-tools
 # Switch to root user
 USER root
 
-RUN apt-get ros-humble-dektop
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	ros-humble-desktop \
+	rm -rf /var/lib/apt/lists/*
+    
 
 # Switch back to 'robotsix-docker' user
 USER robotsix-docker
