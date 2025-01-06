@@ -1,13 +1,17 @@
 ARG UBUNTU_VERSION=latest
 FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-colcon-tools
+ARG UBUNTU_VERSION=latest
 
 # Switch to root user
 USER root
 
-
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	ros-humble-desktop \
+RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
+        ROS_DISTRO=jazzy; \
+	else \
+	ROS_DISTRO=humble; \
+	fi && \
+	apt-get update && apt-get install -y --no-install-recommends \
+	ros-${ROS_DISTRO}-desktop && \
 	rm -rf /var/lib/apt/lists/*
     
 
