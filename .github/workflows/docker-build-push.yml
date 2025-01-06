@@ -95,7 +95,7 @@ jobs:
 
   build_ros2:
     runs-on: ubuntu-latest
-    needs: build_base
+    needs: build_colcon
     strategy:
       matrix:
         ubuntu_version: [22.04, latest]
