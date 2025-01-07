@@ -107,8 +107,10 @@ RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
-# Create a python virtual environment and install poetry
+# Create a python virtual environment activate it and install the required packages
 RUN python3 -m venv /home/robotsix-docker/.venv
+ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
+RUN pip install cmake-language-server && pip cache purge
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
