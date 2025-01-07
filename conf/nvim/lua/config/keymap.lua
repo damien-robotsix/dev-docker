@@ -30,7 +30,7 @@ vim.keymap.set({ "n", "i" }, "<C-d>", function()
 		end
 	end
 end, keymapOptions("Close Popup or Quit"))
-vim.keymap.set({ "n" }, "fs", "<cmd>lua require('plf').format()<cr><cmd>w<cr>", keymapOptions("Format"))
+vim.keymap.set({ "n" }, "fs", "<cmd>lua vim.lsp.buf.format()<cr><cmd>w<cr>", keymapOptions("Format"))
 vim.keymap.set({ "n" }, "<c-Left>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>", keymapOptions("Navigate Left"))
 vim.keymap.set({ "n" }, "<c-Right>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>", keymapOptions("Navigate Right"))
 vim.keymap.set({ "n" }, "<c-Up>", "<cmd>lua require('smart-splits').move_cursor_up()<cr>", keymapOptions("Navigate Up"))
