@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	clangd \
 	sudo \
 	docker-ce \
+	xclip \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -106,6 +107,13 @@ RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
 
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
+
+# Install lazygit
+RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*') && \
+	curl -Lo lazygit.tar.gz  " "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" && \
+	tar xf lazygit.tar.gz lazygit && \
+	sudo install lazygit -D -t /usr/local/bin/ && \
+	rm lazygit.tar.gz lazygit
 
 # Create a python virtual environment activate it and install the required packages
 RUN python3 -m venv /home/robotsix-docker/.venv
