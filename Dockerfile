@@ -144,7 +144,6 @@ COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
 
 # Copy neovim configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/.vimrc /home/robotsix-docker/.vimrc
 COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
 
 # Create the GitHub Copilot configuration directory
