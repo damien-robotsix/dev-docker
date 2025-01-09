@@ -31,13 +31,17 @@ vim.keymap.set({ "n", "i" }, "<C-d>", function()
 	end
 end, keymapOptions("Close Popup or Quit"))
 vim.keymap.set({ "n" }, "fs", "<cmd>lua vim.lsp.buf.format()<cr><cmd>w<cr>", keymapOptions("Format"))
-vim.keymap.set({ "n" }, "<c-Left>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>", keymapOptions("Navigate Left"))
-vim.keymap.set({ "n" }, "<c-Right>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>", keymapOptions("Navigate Right"))
+vim.keymap.set({ "n" }, "<c-Left>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>",
+	keymapOptions("Navigate Left"))
+vim.keymap.set({ "n" }, "<c-Right>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>",
+	keymapOptions("Navigate Right"))
 vim.keymap.set({ "n" }, "<c-Up>", "<cmd>lua require('smart-splits').move_cursor_up()<cr>", keymapOptions("Navigate Up"))
-vim.keymap.set({ "n" }, "<c-Down>", "<cmd>lua require('smart-splits').move_cursor_down()<cr>", keymapOptions("Navigate Down"))
+vim.keymap.set({ "n" }, "<c-Down>", "<cmd>lua require('smart-splits').move_cursor_down()<cr>",
+	keymapOptions("Navigate Down"))
 vim.keymap.set({ "n" }, "<M-Left>", "<cmd>lua require('smart-splits').resize_left()<cr>", keymapOptions("Resize Left"))
 vim.keymap.set({ "n" }, "<M-Right>", "<cmd>lua require('smart-splits').resize_right()<cr>", keymapOptions("Resize Right"))
 vim.keymap.set({ "n" }, "<M-Up>", "<cmd>lua require('smart-splits').resize_up()<cr>", keymapOptions("Resize Up"))
 vim.keymap.set({ "n" }, "<M-Down>", "<cmd>lua require('smart-splits').resize_down()<cr>", keymapOptions("Resize Down"))
 vim.keymap.set({ "v" }, "<c-c>", '"+y', keymapOptions("Copy Selection"))
-vim.keymap.set({ "i" }, "<c-v>", '<c-r>+', keymapOptions("Paster Clipboard")) 
+vim.keymap.set({ "i" }, "<c-v>", '<c-r>+', keymapOptions("Paster Clipboard"))
+vim.keymap.set({ "v" }, "<c-a>", "ggVG", keymapOptions(" Select  All "))
