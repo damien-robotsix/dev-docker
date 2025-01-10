@@ -68,7 +68,6 @@ RUN npm install -g \
 	bash-language-server \
 	dockerfile-language-server-nodejs \
 	yaml-language-server && \
-	vscode-markdown-languageserver \
 	npm cache clean --force
 
 # Install lua-language-server based on architecture
@@ -80,6 +79,17 @@ RUN ARCH=$(uname -m) && \
 	else \
 	echo "Unsupported architecture: $ARCH"; exit 1; \
 	fi
+
+# Inxtall marksman based on architecture
+RUN ARCH=$(uname -m) && \
+	if [ "$ARCH" = "x86_64" ]; then \
+	curl --connect-timeout 5 --retry 10 -L https://github.com/artempyanykh/marksman/releases/downlad/2024-12-18/marksman-linux-x64 -o /usr/local/marksman; \
+	elif [ "$ARCH" = "aarch64" ]; then \
+	curl --connect-timeout 5 --retry 10 -L hhttps://github.com/artempyanykh/marksman/releases/downlad/2024-12-18/marksman-linux-arm64 -o /usr/local/marksman; \
+	else \
+	echo "Unsupported architecture: $ARCH"; exit 1; \
+	fi
+
 # Allow /usr/local/log to be written to by all users
 RUN mkdir /usr/local/log && chmod 777 /usr/local/log
 
@@ -120,7 +130,7 @@ RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygi
 # Create a python virtual environment activate it and install the required packages
 RUN python3 -m venv /home/robotsix-docker/.venv
 ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
-RUN pip install cmake-language-server pre-commit && pip cache purge && pre-commit install
+RUN pip install cmake-language-server pre-commit && pip cache purge
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
