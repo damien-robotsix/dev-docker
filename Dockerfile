@@ -68,6 +68,7 @@ RUN npm install -g \
 	bash-language-server \
 	dockerfile-language-server-nodejs \
 	yaml-language-server && \
+	vscode-markdown-languageserver \
 	npm cache clean --force
 
 # Install lua-language-server based on architecture
