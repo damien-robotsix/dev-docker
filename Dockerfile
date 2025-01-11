@@ -53,6 +53,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	sudo \
 	docker-ce \
 	xclip \
+	cppcheck \
+	cpplint \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
