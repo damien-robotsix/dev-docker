@@ -132,7 +132,7 @@ RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygi
 # Create a python virtual environment activate it and install the required packages
 RUN python3 -m venv /home/robotsix-docker/.venv
 ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
-RUN pip install cmake-language-server pre-commit pyright && pip cache purge
+RUN pip install cmake-language-server pre-commit && pip cache purge
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
