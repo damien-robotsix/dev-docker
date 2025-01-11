@@ -18,7 +18,11 @@ return {
 				})
 			end)
 
-			require("lazy-lsp").setup {}
+			require("lazy-lsp").setup {
+				preferred_servers = {
+					python = { "basedpyright", "ruff" },
+				},
+			}
 		end,
 	},
 }
