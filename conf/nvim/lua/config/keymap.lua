@@ -45,3 +45,4 @@ vim.keymap.set({ "n" }, "<M-Down>", "<cmd>lua require('smart-splits').resize_dow
 vim.keymap.set({ "v" }, "<c-c>", '"+y', keymapOptions("Copy Selection"))
 vim.keymap.set({ "i" }, "<c-v>", '<c-r>+', keymapOptions("Paster Clipboard"))
 vim.keymap.set({ "v" }, "<c-a>", "ggVG", keymapOptions(" Select  All "))
+vim.keymap.set({ "n" }, "tt", '<cmd>Trouble diagnostics toggle<cr>', keymapOptions("Trouble Toggle"))
