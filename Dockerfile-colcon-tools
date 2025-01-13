@@ -6,7 +6,7 @@ FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}
 USER root
 
 # Add ROS 2 repository and import GPG key
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
     echo "deb [arch=$(dpkg --print-architecture)] http://repo.ros2.org/ubuntu/main $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2-latest.list
 
 # Install python3-colcon-common-extensions and python3-rosdep
