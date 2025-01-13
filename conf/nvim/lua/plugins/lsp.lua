@@ -21,6 +21,7 @@ return {
 			require("lazy-lsp").setup {
 				preferred_servers = {
 					python = { "pyright", "ruff" },
+					cpp = { "clangd" },
 				},
 			}
 		end,
