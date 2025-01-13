@@ -56,6 +56,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	cppcheck \
 	cpplint \
 	doxygen \
+	lcov \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
