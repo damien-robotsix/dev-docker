@@ -57,6 +57,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	cpplint \
 	doxygen \
 	lcov \
+	gdb \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
