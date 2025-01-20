@@ -46,4 +46,8 @@ vim.keymap.set({ "v" }, "<c-c>", '"+y', keymapOptions("Copy Selection"))
 vim.keymap.set({ "i" }, "<c-v>", '<c-r>+', keymapOptions("Paster Clipboard"))
 vim.keymap.set({ "v" }, "<c-S-a>", "ggVG", keymapOptions(" Select  All "))
 vim.keymap.set({ "n" }, "tt", '<cmd>Trouble diagnostics toggle<cr>', keymapOptions("Trouble Toggle"))
-vim.keymap.set({ "n" }, "gr", 'vim.lsp.buf.rename()', keymapOptions("Rename Symbol"))
+-- Telescope searches
+-- find files in current directory
+vim.keymap.set({ "n" }, "ff", "<cmd>Telescope find_files<cr>", keymapOptions("Find Files"))
+-- find content in all files in current directory
+vim.keymap.set({ "n" }, "fg", "<cmd>Telescope live_grep<cr>", keymapOptions("Find Grep"))

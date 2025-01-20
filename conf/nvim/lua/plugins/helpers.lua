@@ -1,6 +1,18 @@
 return {
 	{
-		"nvim-telescope/telescope.nvim"
+		"nvim-telescope/telescope.nvim",
+		-- <c-d> to close telescope
+		config = function()
+			require("telescope").setup({
+				defaults = {
+					mappings = {
+						i = {
+							["<c-d>"] = require("telescope.actions").close,
+						},
+					},
+				},
+			})
+		end,
 	},
 	{
 		"mrjones2014/smart-splits.nvim",
