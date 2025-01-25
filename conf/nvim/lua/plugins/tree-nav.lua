@@ -3,7 +3,7 @@ local function my_on_attach(bufnr)
 		if not node then
 			return
 		end
-		local path = node.absolute_path or uv.cwd()
+		local path = node.absolute_path
 		if node.type ~= 'directory' and node.parent then
 			path = node.parent.absolute_path
 		end
@@ -20,7 +20,7 @@ local function my_on_attach(bufnr)
 	vim.keymap.del('n', '<C-k>', { buffer = bufnr })
 	vim.keymap.del('n', '<Tab>', { buffer = bufnr })
 	vim.keymap.set('n', '<C-f>', function()
-		local node = api.nvim_tree_get_node(bufnr)
+		local node = api.tree.get_node_under_cursor()
 		grep_in(node)
 	end, { buffer = bufnr, desc = 'Grep in current directory' })
 end
