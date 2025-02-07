@@ -141,7 +141,6 @@ RUN pip install cmake-language-server pre-commit && pip cache purge
 WORKDIR /home/robotsix-docker
 RUN git clone https://github.com/damien-robotsix/robotsix_gpt.git
 WORKDIR /home/robotsix-docker/robotsix_gpt
-RUN git checkout langchain
 RUN pip install .
 
 # Install Nix package manager
