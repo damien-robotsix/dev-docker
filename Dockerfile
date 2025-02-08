@@ -64,9 +64,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN update-locale LANG=en_US.UTF-8
 
 # Download and extract the latest Neovim
-RUN curl -LO https://github.com/neovim/neovim/releases/download/latest/nvim-linux64.tar.gz && \
-	tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
-	rm nvim-linux64.tar.gz
+
+RUN ARCH=$(uname -m) && \
+	if [ "$ARCH" = "x86_64" ]; then \
+	curl -LO https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
+	tar xzvf nvim-linux-x86_64.tar.gz -C /usr/local --strip-components=1 && \
+	rm nvim-linux-x86_64.tar.gz; \
+	elif [ "$ARCH" = "aarch64" ]; then \
+	curl -LO https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-arm64.tar.gz && \
+	tar xzvf nvim-linux-arm64.tar.gz -C /usr/local --strip-components=1 && \
+	rm nvim-linux-arm64.tar.gz; \
+	else \
+	echo "Unsupported architecture: $ARCH"; exit 1; \
+	fi
 
 # Install language servers with npm
 RUN npm install -g \
