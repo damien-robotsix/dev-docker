@@ -63,8 +63,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN update-locale LANG=en_US.UTF-8
 
-# Download and extract the latest Neovim nightly build
-RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz && \
+# Download and extract the latest Neovim
+RUN curl -LO https://github.com/neovim/neovim/releases/download/latest/nvim-linux64.tar.gz && \
 	tar xzvf nvim-linux64.tar.gz -C /usr/local --strip-components=1 && \
 	rm nvim-linux64.tar.gz
 
