@@ -1,0 +1,19 @@
+ARG UBUNTU_VERSION=latest
+FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-ros2
+ARG UBUNTU_VERSION=latest
+
+# Switch to root user
+USER root
+
+# Install Gazebo Harmonic
+RUN curl -s https://packages.osrfoundation.org/gazebo.gpg -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+
+RUN apt-get update && apt-get install -y \
+    gz-harmonic \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# Switch back to 'robotsix-docker' user
+USER robotsix-docker
+
