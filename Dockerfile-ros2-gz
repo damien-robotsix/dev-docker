@@ -15,7 +15,7 @@ RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
 	GZ_DISTRO=garden; \
 	fi && \
 	apt-get update && apt-get install -y \
-    	gz-${GZ_DISTRO} && \
+    	gz-${GZ_DISTRO} \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
