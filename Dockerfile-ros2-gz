@@ -9,7 +9,7 @@ USER root
 RUN curl -s https://packages.osrfoundation.org/gazebo.gpg -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 
-RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
+RUN if [ ${UBUNTU_VERSION} = "latest" || ${UBUNTU_VERSION} = "22.04" ]; then \
         GZ_DISTRO=harmonic; \
 	else \
 	GZ_DISTRO=garden; \
