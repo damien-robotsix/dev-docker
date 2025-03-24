@@ -1,5 +1,5 @@
 dark-mode: true
 chat-language: en
 voice-language: en
-model: openrouter/anthropic/claude-3-7-sonnet-20250219
+model: openrouter/anthropic/claude-3.7-sonnet:thinking
 
