@@ -1,4 +1,4 @@
 dark-mode: true
 chat-language: en
 voice-language: en
-model: o1-preview
+model: sonnet

@@ -147,11 +147,8 @@ RUN python3 -m venv /home/robotsix-docker/.venv
 ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
 RUN pip install cmake-language-server pre-commit && pip cache purge
 
-# Install https://github.com/damien-robotsix/robotsix_gpt branch langchain (pip install .)
-WORKDIR /home/robotsix-docker
-RUN git clone https://github.com/damien-robotsix/robotsix_gpt.git
-WORKDIR /home/robotsix-docker/robotsix_gpt
-RUN pip install .
+# Install aider
+RUN python -m pip install aider-install && aider-install
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
