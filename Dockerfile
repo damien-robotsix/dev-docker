@@ -148,7 +148,7 @@ ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
 RUN pip install cmake-language-server pre-commit && pip cache purge
 
 # Install aider
-RUN python -m pip install aider-install && aider-install
+RUN python -m pip install aider-chat
 
 # Install Nix package manager
 RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
