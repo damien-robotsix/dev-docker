@@ -58,6 +58,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	doxygen \
 	lcov \
 	gdb \
+ 	ruby-dev \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
