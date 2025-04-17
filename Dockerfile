@@ -81,6 +81,7 @@ RUN ARCH=$(uname -m) && \
 # Install language servers with npm
 RUN npm install -g \
 	bash-language-server \
+ 	ruby-lsp \
 	dockerfile-language-server-nodejs \
 	yaml-language-server && \
 	npm cache clean --force
