@@ -23,6 +23,7 @@ return {
 					python = { "pyright", "ruff" },
 					cpp = { "clangd" },
 				},
+				prefer_local = true,
 			}
 		end,
 	},
