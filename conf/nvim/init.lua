@@ -28,3 +28,6 @@ cmp.setup({
 		['<CR>'] = cmp.mapping.confirm({ select = true }),
 	}),
 })
+
+-- Set mapleader to space
+vim.g.mapleader = " "

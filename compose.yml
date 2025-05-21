@@ -1,13 +1,13 @@
 services:
   dev:
-    restart: unless-stopped
-    image: docker.robotsix.net/dev-docker:latest
+    image: dev
     container_name: robotsix-dev
     tty: true
     stdin_open: true
     environment:
       - TERM=xterm-256color
       - TZ=Europe/Paris
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
     network_mode: host
     volumes:
       # Saves copilot configuration

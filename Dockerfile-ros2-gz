@@ -1,6 +1,8 @@
 ARG UBUNTU_VERSION=latest
+ARG GZ_DISTRO=harmonic
 FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-ros2
-ARG UBUNTU_VERSION=latest
+ARG UBUNTU_VERSION
+ARG GZ_DISTRO
 
 # Switch to root user
 USER root
@@ -9,14 +11,9 @@ USER root
 RUN curl -s https://packages.osrfoundation.org/gazebo.gpg -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 
-RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
-        GZ_DISTRO=harmonic; \
-	else \
-	GZ_DISTRO=fortress; \
-	fi && \
-	apt-get update && apt-get install -y \
-    	gz-${GZ_DISTRO} \
-	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update && apt-get install -y \
+    gz-${GZ_DISTRO} \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Switch back to 'robotsix-docker' user
 USER robotsix-docker
