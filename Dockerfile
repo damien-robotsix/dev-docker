@@ -183,7 +183,6 @@ RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
 # Copy aider configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.aider.conf.yml
-COPY --chown=robotsix-docker conf/aider.model.settings.yml /home/robotsix-docker/.aider.model.settings.yml
 
 WORKDIR /home/robotsix-docker
 
