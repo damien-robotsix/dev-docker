@@ -36,7 +36,7 @@ jobs:
       - name: Generate Tags
         id: generate_tags
         run: |
-          TAG="docker.robotsix.net/dev-docker:${{ matrix.ubuntu_version }}"
+          TAG="robotsix/dev-docker:${{ matrix.ubuntu_version }}"
           echo "tags=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
@@ -79,7 +79,7 @@ jobs:
       - name: Generate Tags
         id: generate_tags
         run: |
-          TAG="docker.robotsix.net/dev-docker:${{ matrix.ubuntu_version }}-colcon-tools"
+          TAG="robotsix/dev-docker:${{ matrix.ubuntu_version }}-colcon-tools"
           echo "tags=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
@@ -122,7 +122,7 @@ jobs:
       - name: Generate Tags
         id: generate_tags
         run: |
-          TAG="docker.robotsix.net/dev-docker:${{ matrix.ubuntu_version }}-ros2"
+          TAG="robotsix/dev-docker:${{ matrix.ubuntu_version }}-ros2"
           echo "tags=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
@@ -165,7 +165,7 @@ jobs:
       - name: Generate Tags
         id: generate_tags
         run: |
-          TAG="docker.robotsix.net/dev-docker:${{ matrix.ubuntu_version }}-gz"
+          TAG="robotsix/dev-docker:${{ matrix.ubuntu_version }}-gz"
           echo "tags=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image

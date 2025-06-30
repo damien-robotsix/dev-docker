@@ -1,5 +1,5 @@
 ARG UBUNTU_VERSION=latest
-FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}
+FROM robotsix/dev-docker:${UBUNTU_VERSION}
 
 # Install python3-colcon-common-extensions and rosdep
 # Switch to root user

@@ -1,6 +1,6 @@
 ARG UBUNTU_VERSION=latest
 ARG GZ_DISTRO=harmonic
-FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-ros2
+FROM robotsix/dev-docker:${UBUNTU_VERSION}-ros2
 ARG UBUNTU_VERSION
 ARG GZ_DISTRO
 

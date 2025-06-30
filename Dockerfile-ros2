@@ -1,5 +1,5 @@
 ARG UBUNTU_VERSION=latest
-FROM docker.robotsix.net/dev-docker:${UBUNTU_VERSION}-colcon-tools
+FROM robotsix/dev-docker:${UBUNTU_VERSION}-colcon-tools
 ARG UBUNTU_VERSION
 
 # Switch to root user
