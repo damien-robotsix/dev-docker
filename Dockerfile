@@ -43,8 +43,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	portaudio19-dev \
 	libsndfile1 \
 	linux-headers-generic \
-	alsa-base \
-	alsa-utils \
 	language-pack-en \
 	tzdata \
 	ripgrep \
@@ -65,52 +63,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN update-locale LANG=en_US.UTF-8
 
-# Download and extract the latest Neovim
-
-RUN ARCH=$(uname -m) && \
-	if [ "$ARCH" = "x86_64" ]; then \
-	curl -LO https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
-	tar xzvf nvim-linux-x86_64.tar.gz -C /usr/local --strip-components=1 && \
-	rm nvim-linux-x86_64.tar.gz; \
-	elif [ "$ARCH" = "aarch64" ]; then \
-	curl -LO https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-arm64.tar.gz && \
-	tar xzvf nvim-linux-arm64.tar.gz -C /usr/local --strip-components=1 && \
-	rm nvim-linux-arm64.tar.gz; \
-	else \
-	echo "Unsupported architecture: $ARCH"; exit 1; \
-	fi
-
-# Install language servers with npm
-RUN npm install -g \
-	bash-language-server \
- 	ruby-lsp \
-	dockerfile-language-server-nodejs \
-	yaml-language-server && \
-	npm cache clean --force
-
-# Install lua-language-server based on architecture
-RUN ARCH=$(uname -m) && \
-	if [ "$ARCH" = "x86_64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-x64.tar.gz | tar -xz -C /usr/local; \
-	elif [ "$ARCH" = "aarch64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-linux-arm64.tar.gz | tar -xz -C /usr/local; \
-	else \
-	echo "Unsupported architecture: $ARCH"; exit 1; \
-	fi
-
-# Inxtall marksman based on architecture
-RUN ARCH=$(uname -m) && \
-	if [ "$ARCH" = "x86_64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L https://github.com/artempyanykh/marksman/releases/downlad/2024-12-18/marksman-linux-x64 -o /usr/local/marksman; \
-	elif [ "$ARCH" = "aarch64" ]; then \
-	curl --connect-timeout 5 --retry 10 -L hhttps://github.com/artempyanykh/marksman/releases/downlad/2024-12-18/marksman-linux-arm64 -o /usr/local/marksman; \
-	else \
-	echo "Unsupported architecture: $ARCH"; exit 1; \
-	fi
-
-# Allow /usr/local/log to be written to by all users
-RUN mkdir /usr/local/log && chmod 777 /usr/local/log
-
 # Add Hack Nerd Font
 COPY fonts/Hack /usr/share/fonts/Hack
 RUN fc-cache -f -v  # Rebuild font cache
@@ -125,36 +77,11 @@ RUN if id -u ubuntu >/dev/null 2>&1; then \
 	fi && \
 	chsh -s /bin/zsh robotsix-docker
 
-# Prepare for Nix installation
-RUN mkdir -m 0755 /nix && chown robotsix-docker /nix
-
-# Add robotsix-docker and root to the audio group
-# Add robotsix-docker to sudoers
-RUN usermod -a -G audio robotsix-docker && usermod -a -G audio root && \
-	usermod -a -G sudo robotsix-docker && \
-	echo "robotsix-docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
-# Install lazygit
-WORKDIR /home/robotsix
-RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*') && \
-	curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" && \
-	tar xf lazygit.tar.gz lazygit && \
-	sudo install lazygit -D -t /usr/local/bin/ && \
-	rm lazygit.tar.gz lazygit
-
-# Create a python virtual environment activate it and install the required packages
+# Create a python virtual environment activate it
 RUN python3 -m venv /home/robotsix-docker/.venv
-ENV PATH="/home/robotsix-docker/.venv/bin:$PATH"
-RUN pip install cmake-language-server pre-commit && pip cache purge
-
-# Install aider
-RUN python -m pip install aider-chat
-
-# Install Nix package manager
-RUN bash -c "$(curl -L https://nixos.org/nix/install)" --no-daemon
 
 # Install oh-my-zsh for 'robotsix-docker'
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
@@ -174,12 +101,6 @@ COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
 # Copy tmux configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
-
-# Copy neovim configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/nvim /home/robotsix-docker/.config/nvim
-
-# Create the GitHub Copilot configuration directory
-RUN mkdir -p /home/robotsix-docker/.config/github-copilot
 
 # Copy aider configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.aider.conf.yml
