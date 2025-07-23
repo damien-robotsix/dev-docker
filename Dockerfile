@@ -77,6 +77,11 @@ RUN if id -u ubuntu >/dev/null 2>&1; then \
 	fi && \
 	chsh -s /bin/zsh robotsix-docker
 
+# Set up sudo for 'robotsix-docker' user
+RUN echo "robotsix-docker ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/robotsix-docker && \
+	chmod 0440 /etc/sudoers.d/robotsix-docker && \
+	echo "Defaults env_keep += \"PATH\"" >> /etc/sudoers.d/robotsix-docker
+
 # Switch to 'robotsix-docker' user
 USER robotsix-docker
 
