@@ -11,7 +11,8 @@ RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
 	ROS_DISTRO=humble; \
 	fi && \
 	apt-get update && apt-get install -y --no-install-recommends \
-	ros-${ROS_DISTRO}-desktop && \
+	ros-${ROS_DISTRO}-desktop \
+	ros-${ROS_DISTRO}-plotjuggler-ros && \
 	rm -rf /var/lib/apt/lists/*
     
 
