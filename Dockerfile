@@ -29,10 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	fontconfig \
 	tmux \
 	g++ \
-	clang \
 	openssl \
 	nodejs \
-	tzdata \
 	make \
 	python3-pip \
 	openssh-client \
@@ -40,12 +38,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	gnupg \
 	python3-venv \
 	python3-dev \
-	portaudio19-dev \
-	libsndfile1 \
 	linux-headers-generic \
 	language-pack-en \
-	tzdata \
-	ripgrep \
 	tmuxinator \
 	clangd \
 	sudo \
@@ -56,8 +50,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	doxygen \
 	lcov \
 	gdb \
- 	ruby-dev \
-  	ruby-bundler \
+	ruby-dev \
+	ruby-bundler \
 	xz-utils && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -106,9 +100,6 @@ COPY --chown=robotsix-docker conf/.zshrc /home/robotsix-docker/.zshrc
 
 # Copy tmux configuration for 'robotsix-docker'
 COPY --chown=robotsix-docker conf/.tmux.conf /home/robotsix-docker/.tmux.conf
-
-# Copy aider configuration for 'robotsix-docker'
-COPY --chown=robotsix-docker conf/aider_config.yml /home/robotsix-docker/.aider.conf.yml
 
 WORKDIR /home/robotsix-docker
 
