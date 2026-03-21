@@ -31,3 +31,10 @@ clean_and_open_debug() {
 PATH=$PATH:/home/robotsix-docker/.nix-profile/bin
 
 source /home/robotsix-docker/.venv/bin/activate
+
+# Conditionally source ROS2 based on the distribution
+if [ -f /opt/ros/jazzy/setup.zsh ]; then
+    source /opt/ros/jazzy/setup.zsh
+elif [ -f /opt/ros/humble/setup.zsh ]; then
+    source /opt/ros/humble/setup.zsh
+fi

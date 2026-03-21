@@ -14,7 +14,7 @@ RUN if [ ${UBUNTU_VERSION} = "latest" ]; then \
 	ros-${ROS_DISTRO}-desktop \
 	ros-${ROS_DISTRO}-plotjuggler-ros && \
 	rm -rf /var/lib/apt/lists/*
-    
+
 
 # Switch back to 'robotsix-docker' user
 USER robotsix-docker
