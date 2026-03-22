@@ -38,3 +38,19 @@ if [ -f /opt/ros/jazzy/setup.zsh ]; then
 elif [ -f /opt/ros/humble/setup.zsh ]; then
     source /opt/ros/humble/setup.zsh
 fi
+
+# Enable Bash completion compatibility in Zsh
+autoload -U +X bashcompinit && bashcompinit
+
+# Conditionally register ROS2 and Colcon argcomplete scripts
+if command -v register-python-argcomplete &> /dev/null; then
+    # Check for ROS2
+    if command -v ros2 &> /dev/null; then
+        eval "$(register-python-argcomplete ros2)"
+    fi
+
+    # Check for Colcon
+    if command -v colcon &> /dev/null; then
+        eval "$(register-python-argcomplete colcon)"
+    fi
+fi
