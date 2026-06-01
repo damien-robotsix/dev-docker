@@ -1,4 +1,6 @@
-ARG UBUNTU_VERSION=latest
+# Pinned to 24.04 for now: Ubuntu's rolling "latest" tag points to 26.04, which
+# isn't supported yet. Restore the default to "latest" once 26.04 is supported.
+ARG UBUNTU_VERSION=24.04
 FROM ubuntu:${UBUNTU_VERSION}
 
 ENV TZ=US \

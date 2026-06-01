@@ -40,13 +40,24 @@ jobs:
           TAG="robotsix/dev-docker:${{ matrix.ubuntu_version }}"
           echo "tags=$TAG" >> $GITHUB_OUTPUT
 
+      - name: Resolve base Ubuntu version
+        id: base_version
+        run: |
+          # Publish under the "latest" tag but pin its base image to 24.04 until
+          # newer Ubuntu releases (26.04) are supported.
+          if [ "${{ matrix.ubuntu_version }}" = "latest" ]; then
+            echo "version=24.04" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ matrix.ubuntu_version }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           file: ${{ steps.determine_dockerfile.outputs.dockerfile }}
-          build-args: UBUNTU_VERSION=${{ matrix.ubuntu_version }}
+          build-args: UBUNTU_VERSION=${{ steps.base_version.outputs.version }}
           tags: ${{ steps.generate_tags.outputs.tags }}
 
   build_colcon:
